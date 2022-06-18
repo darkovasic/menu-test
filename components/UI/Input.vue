@@ -6,7 +6,6 @@
     dense
     solo
     flat
-    @input="$emit('input', $event.target.value)
   ></v-text-field>
 </template>
 

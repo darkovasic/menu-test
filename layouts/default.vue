@@ -2,7 +2,7 @@
   <v-app>
     <v-main class="background">
       <v-container fill-height>
-        <Nuxt />
+        <Nuxt />  
       </v-container>
     </v-main>
   </v-app>

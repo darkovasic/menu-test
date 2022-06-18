@@ -34,7 +34,7 @@
           </v-col>
 
           <v-card-actions class="pa-0">
-            <v-btn block depressed color="#FF6600" class="white--text" type="submit" height="40px" nuxt to="/currencies"> Sign in </v-btn>
+            <v-btn block depressed color="#FF6600" class="white--text" type="submit" height="40px" nuxt to="/admin"> Sign in </v-btn>
           </v-card-actions>
         </v-form>
       </v-card>

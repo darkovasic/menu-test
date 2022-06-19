@@ -37,7 +37,7 @@
             <Button 
               block
               type="submit"    
-              nuxt to="/admin"         
+              nuxt to="/currencies"         
             > Sign in </Button>
           </v-card-actions>
         </v-form>
@@ -59,7 +59,6 @@ export default {
   data: () => ({
     email: '',
     password: null,
-    showPass: false,
     rules: {
       required: value => !!value || 'Required',
       min: v => v && v.length >= 8 || 'Min 8 characters',
@@ -84,10 +83,4 @@ export default {
 
 // .v-text-field.v-text-field--solo .v-input__control input
 //     border-color: red !important
-
-// .v-application div.v-text-field--outlined
-//     color: transparent !important
-
-// .v-text-field--outlined.v-input--is-focused fieldset, .v-text-field--outlined.v-input--has-state fieldset
-//     border-color: #1976d2 !important
 </style>

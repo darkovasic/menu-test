@@ -3,7 +3,11 @@
     <v-main class="overflow-hidden">
       <!-- <v-container> -->
         <Header />
-        <Nuxt />
+        <Sidebar class="left" />
+
+        <Nuxt class="left" />
+
+
       <!-- </v-container> -->
     </v-main>
   </v-app>
@@ -23,5 +27,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-
+.left
+  float: left
 </style>

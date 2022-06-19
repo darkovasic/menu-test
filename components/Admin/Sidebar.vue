@@ -57,24 +57,19 @@ export default {
 <style scoped>
 .active {
   background-color: rgba(255, 102, 0, 0.07);
-  color: #FF6600 !important;
 }
 
 .sidenav {
   height: 100%;
-  width: 256px;
+  width: 20%;
   background-color: #F2F2F2;
 
-  position: fixed;
-
   box-sizing: border-box;
-  padding: 30px;
+  padding: 15px 30px;
 }
 
 .icon {
-
   margin-right: 20px;
-
   height: 22px;
   width: 22px;
 }
@@ -88,7 +83,7 @@ export default {
 
 .nav-item {
   display: flex;
-  padding: 15px 10px;
+  padding: 15px;
   align-items: center;
 
 }
@@ -101,6 +96,6 @@ export default {
 
 .nav-item a:hover,
 .nav-item a:active {
-  color: red;
+  color: #FF6600 ;
 }
 </style>

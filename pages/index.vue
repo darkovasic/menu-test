@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
-      <v-card flat class="rounded-lg pa-10">
+      <v-card flat class="rounded-lg pa-10 form-container">
         <v-card-title class="pa-0 pb-8">
           <MenuLogo />
         </v-card-title>
@@ -34,7 +34,11 @@
           </v-col>
 
           <v-card-actions class="pa-0">
-            <v-btn block depressed color="#FF6600" class="white--text" type="submit" height="40px" nuxt to="/admin"> Sign in </v-btn>
+            <Button 
+              block
+              type="submit"    
+              nuxt to="/admin"         
+            > Sign in </Button>
           </v-card-actions>
         </v-form>
       </v-card>
@@ -43,11 +47,13 @@
 </template>
 
 <script>
-import Input from '@/components/UI/Input.vue'
+import Input from '@/components/UI/Input.vue';
+import Button from '@/components/UI/Button.vue';
 
 export default {
   components: {
-    Input
+    Input,
+    Button
   },
   name: 'LoginPage',
   data: () => ({
@@ -63,6 +69,9 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.form-container
+  width: 400px
+
 .login-form
   border-radius: 8px
 

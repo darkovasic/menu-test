@@ -37,8 +37,8 @@ export default {
     position: relative
     display: flex
     align-items: center
-    padding: 15px
-    z-index: 1000
+    padding: 10px 25px
+    z-index: 10
 
 .header-left
     width: 50%      

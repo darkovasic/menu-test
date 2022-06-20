@@ -11,28 +11,25 @@ const createStore = () => {
                 name: '',
                 code: '',
                 symbol: ''
-            }
+            },
+            drawer: true,
         },
         mutations: {
-            // setCurrencies(state, currencies) {
-            //     state.currencies = currencies;
-            // },
             updateCurrencyName(state, currencyName) {
-                console.log(currencyName);
                 state.currency.name = currencyName;
-            }
+            },
+            updateCurrencyCode(state, currencyCode) {
+                state.currency.code = currencyCode;
+            },
+            updateCurrencySymbol(state, currencySymbol) {
+                state.currency.symbol = currencySymbol;
+            },
+            toggleDrawer(state, data) {
+                state.drawer = data;
+            }   
         },
         actions: {
-            // nuxtServerInit(vuexContext, context) {
-            //     console.log('nuxtServerInit');
-            //     vuexContext.commit('setCurrencies', [
-            //         { id: 1, name: 'American Dollar', code: 'USD', symbol: '$' },
-            //         { id: 2, name: 'Canadian Dollar', code: 'CAD', symbol: '$' },
-            //     ]);
-            // },
-            // setCurrencies(vuexContext, currencies) {
-            //     vuexContext.commit('setCurrencies', currencies);
-            // }
+
         },
         getters: {
             currencies(state) {
@@ -40,7 +37,10 @@ const createStore = () => {
             },
             currency(state) {
                 return state.currency;
-            }
+            },
+            drawer(state) {
+                return state.drawer;
+            }            
         }
     });
 }

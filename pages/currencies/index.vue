@@ -5,11 +5,15 @@
         <h1>Currencies</h1>
       </div>
       <div class="top-right-div">
-        <Button
-          class="btn-add-currency"
-          type="button"    
-          @click.stop="drawer = !drawer"       
-        > &#10010; Add Currency </Button>
+
+      <v-btn 
+        depressed 
+        color="#FF6600" 
+        class="btn-add-currency white--text"
+        type="button"    
+        @click="toggleDrawer" 
+        height="40px"> &#10010; Add Currency </v-btn>
+
       </div>
     </div>
 
@@ -26,7 +30,7 @@
           :headers="headers"
           :items="currencies"
           item-key="id"
-          :items-per-page="5"
+          :items-per-page="15"
           class="elevation-0"
           hide-default-footer
           no-data-text="There are no currencies added"
@@ -64,16 +68,18 @@
             @input="updateCurrencyName"
           />
           <p>Currency code</p>
-          <Input
+          <input
             type="text"
-
-            label="e.g. USD"
+            placeholder="e.g. USD"
+            :value="currencyCode"
+            @input="updateCurrencyCode"
           />
           <p>Currency symbol</p>
-          <Input
+          <input
             type="text"
-
-            label="Add symbol"
+            placeholder="Add symbol"
+            :value="currencySymbol"
+            @input="updateCurrencySymbol"
           />
         </div>
       </form>
@@ -99,26 +105,38 @@ export default {
         { text: 'Currency Name'.toUpperCase(), value: 'name' },
         { text: 'Currency Code'.toUpperCase(), value: 'code' },
         { text: 'Currency Symbol'.toUpperCase(), value: 'symbol' },
-      ],
-      drawer: true,
+      ]
     }
   },
   computed: {
     ...mapGetters([
         'currency',
         'currencies',
+        'drawer'
     ]),    
     ...mapState({
-      currencyName: state => state.currency.name
+      currencyName: state => state.currency.name,
+      currencyCode: state => state.currency.code,
+      currencySymbol: state => state.currency.symbol,
     })
   },
   methods: {
     updateCurrencyName (e) {
       this.$store.commit('updateCurrencyName', e.target.value)
     },
+    updateCurrencyCode (e) {
+      this.$store.commit('updateCurrencyCode', e.target.value)
+    },
+    updateCurrencySymbol (e) {
+      this.$store.commit('updateCurrencySymbol', e.target.value)
+    },
     submit (e) {
       this.$store.commit('updateCurrencies', e.target.value)
-    }
+    },
+    toggleDrawer (v) {
+      // console.log('toggleDrawer', drawer);
+      this.$store.commit('toggleDrawer', v)
+    },    
   }
 }
 </script>

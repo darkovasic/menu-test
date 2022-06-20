@@ -54,48 +54,38 @@ export default {
 </script>
 
 
-<style scoped>
-.active {
-  background-color: rgba(255, 102, 0, 0.07);
-}
+<style lang="sass" scoped>
+.active
+  background-color: rgba(255, 102, 0, 0.07)
 
-.sidenav {
-  height: 100%;
-  width: 20%;
-  background-color: #F2F2F2;
+.sidenav
+  height: 100%
+  width: 20%
+  background-color: #F2F2F2
+  box-sizing: border-box
+  padding: 15px 30px
 
-  box-sizing: border-box;
-  padding: 15px 30px;
-}
+.icon
+  margin-right: 20px
+  height: 22px
+  width: 22px
 
-.icon {
-  margin-right: 20px;
-  height: 22px;
-  width: 22px;
-}
+.nav-list
+  list-style: none
+  padding: 0
+  margin: 0
 
+.nav-item
+  display: flex
+  padding: 15px
+  align-items: center
 
-.nav-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.nav-item {
-  display: flex;
-  padding: 15px;
-  align-items: center;
-
-}
-
-.nav-item a {
-  text-decoration: none;
-  color: #141414;
-  font-size: 14px;
-}
+.nav-item a
+  text-decoration: none
+  color: #141414
+  font-size: 14px
 
 .nav-item a:hover,
-.nav-item a:active {
-  color: #FF6600 ;
-}
+.nav-item a:active
+  color: #FF6600
 </style>

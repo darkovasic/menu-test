@@ -1,7 +1,6 @@
 <template>
   <v-text-field
     v-bind="$attrs"
-    :value="value"
     outlined 
     dense
     solo

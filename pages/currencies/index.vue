@@ -1,6 +1,4 @@
 <template>
-  <!-- <v-row>
-    <v-col md="9"> -->
   <div class="currencies-container">
     <div class="top">
       <div class="top-left-div">
@@ -26,8 +24,8 @@
     <div class="table-wrapper">
         <v-data-table
           :headers="headers"
-          :items="desserts"
-          item-key="name"
+          :items="currencies"
+          item-key="id"
           :items-per-page="5"
           class="elevation-0"
           hide-default-footer
@@ -37,55 +35,56 @@
     </div>
     <v-navigation-drawer
       absolute
-      permanent
+      temporary
       right
       width="440px"
       v-model="drawer"
     >
-      <div class="add-currency-header">
-        <div class="add-currency-title">
-          <p>Add Currency</p>
+      <form @submit.prevent="submit">
+        <div class="add-currency-header">
+          <div class="add-currency-title">
+            <p>Add Currency</p>
+          </div>
+          <div class="add-currency-buttons text-right">
+            <Button
+              type="button"   
+            >Cancel</Button>
+            <Button
+              type="submit"     
+            >Add</Button>
+          </div>
         </div>
-        <div class="add-currency-buttons text-right">
-          <Button
-            type="button"
-            @click.stop="drawer = !drawer"       
-          >Cancel</Button>
-          <Button
-            type="button"    
-            @click.stop="drawer = !drawer"       
-          >Add</Button>
-        </div>
-      </div>
-      <v-divider></v-divider>
-      <div class="add-currency-form">
-        <p>Currency name</p>
-        <Input
-          type="text"
-          label="Add name"
-        />
-        <p>Currency code</p>
-        <Input
-          type="text"
-          label="e.g. USD"
-        />
-        <p>Currency symbol</p>
-        <Input
-          type="text"
-          label="Add symbol"
-        />
-      </div>
+        <v-divider></v-divider>
+        <div class="add-currency-form">
+          <p>Currency name</p>
+          <input
+            type="text"
+            placeholder="Add name"
+            :value="currencyName"
+            @input="updateCurrencyName"
+          />
+          <p>Currency code</p>
+          <Input
+            type="text"
 
+            label="e.g. USD"
+          />
+          <p>Currency symbol</p>
+          <Input
+            type="text"
+
+            label="Add symbol"
+          />
+        </div>
+      </form>
     </v-navigation-drawer>
   </div>
-
-    <!-- </v-col>
-  </v-row> -->
 </template>
 
 <script>
 import Button from '@/components/UI/Button.vue';
 import Input from '@/components/UI/Input.vue';
+import {mapGetters, mapState} from 'vuex';
 
 export default {
   layout: 'admin',
@@ -97,11 +96,28 @@ export default {
   data() {
     return {
       headers:[
-        { text: 'Currency Name'.toUpperCase(), value: 'curr-name' },
-        { text: 'Currency Code'.toUpperCase(), value: 'curr-code' },
-        { text: 'Currency Symbol'.toUpperCase(), value: 'curr-symbol' },
+        { text: 'Currency Name'.toUpperCase(), value: 'name' },
+        { text: 'Currency Code'.toUpperCase(), value: 'code' },
+        { text: 'Currency Symbol'.toUpperCase(), value: 'symbol' },
       ],
-      drawer: true
+      drawer: true,
+    }
+  },
+  computed: {
+    ...mapGetters([
+        'currency',
+        'currencies',
+    ]),    
+    ...mapState({
+      currencyName: state => state.currency.name
+    })
+  },
+  methods: {
+    updateCurrencyName (e) {
+      this.$store.commit('updateCurrencyName', e.target.value)
+    },
+    submit (e) {
+      this.$store.commit('updateCurrencies', e.target.value)
     }
   }
 }
@@ -169,4 +185,14 @@ top-left-div h1
   font-size: 14px
   line-height: 22px
 
+.add-currency-form input
+  width: 100%
+  min-height: 40px
+  font-size: 14px
+  padding: 0 12px
+  border: 1px solid #ccc
+  margin-bottom: 20px
+  -webkit-border-radius: 2px
+  -moz-border-radius: 2px
+  border-radius: 4px
 </style>

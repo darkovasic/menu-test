@@ -50,9 +50,17 @@
             <p>Add Currency</p>
           </div>
           <div class="add-currency-buttons text-right">
-            <Button
-              type="button"   
-            >Cancel</Button>
+            <v-btn 
+              depressed 
+              color="#FF6600" 
+              class="white--text"
+              type="button"    
+              @click="toggleDrawer(false)" 
+              height="40px">Cancel</v-btn>
+            <!-- <Button
+              type="button" 
+              @click="toggleDrawer(false)"   
+            >Cancel</Button> -->
             <Button
               type="submit"     
             >Add</Button>
@@ -130,11 +138,14 @@ export default {
     updateCurrencySymbol (e) {
       this.$store.commit('updateCurrencySymbol', e.target.value)
     },
-    submit (e) {
-      this.$store.commit('updateCurrencies', e.target.value)
+    submit () {
+      this.$store.commit('updateCurrencies', {
+        name: this.currencyName,
+        code: this.currencyCode,
+        symbol: this.currencySymbol
+      })
     },
     toggleDrawer (v) {
-      // console.log('toggleDrawer', drawer);
       this.$store.commit('toggleDrawer', v)
     },    
   }

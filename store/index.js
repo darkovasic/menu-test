@@ -24,6 +24,9 @@ const createStore = () => {
             updateCurrencySymbol(state, currencySymbol) {
                 state.currency.symbol = currencySymbol;
             },
+            updateCurrencies(state, currency) {
+                state.currencies.push(currency);
+            },            
             toggleDrawer(state, data) {
                 state.drawer = data;
             }   

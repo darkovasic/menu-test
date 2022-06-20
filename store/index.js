@@ -3,15 +3,22 @@ import Vuex from 'vuex';
 const createStore = () => {
     return new Vuex.Store({
         state: {
-            currencies: [],
+            currencies: [
+                {id: 1, name: 'American Dollar', code: 'USD', symbol: '$'},
+                {id: 2, name: 'Canadian Dollar', code: 'CAD', symbol: '$'}
+            ],
             currency: {
                 name: '',
                 code: '',
                 symbol: ''
             },
+            search: '',
             drawer: false,
         },
         mutations: {
+            updateSearch(state, search) {
+                state.search = search;
+            },            
             updateCurrencyName(state, currencyName) {
                 state.currency.name = currencyName;
             },
@@ -22,9 +29,9 @@ const createStore = () => {
                 state.currency.symbol = currencySymbol;
             },
             updateCurrencies(state, currency) {
-                const index = state.currencies.findIndex(cur => cur.id === currency.id);
+                const index = state.currencies.some(cur => cur.id === currency.id);
                 console.log('index', index, currency);
-                if(index !== -1) {
+                if(index) {
                     const newCurrencies = state.currencies.map((cur) => {
                         if (cur.id === currency.id) return currency
                         else return cur;
@@ -46,7 +53,7 @@ const createStore = () => {
                     }, 500)
                 }
             },
-            editCurrency(state, id) {
+            loadCurrency(state, id) {
                 console.log('edit currency', id);
                 state.currency = state.currencies.find(currency => currency.id === id);
                 this.commit("toggleDrawer", id)
@@ -71,7 +78,10 @@ const createStore = () => {
             },
             drawer(state) {
                 return state.drawer;
-            }            
+            },
+            search(state) {
+                return state.search;
+            }                       
         }
     });
 }

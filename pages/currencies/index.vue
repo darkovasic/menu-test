@@ -18,11 +18,15 @@
     </div>
 
     <div class="search-wrapper">
-      <Input
+      <v-text-field
+        outlined dense solo flat
         type="text"
         label="Search"
         prepend-inner-icon="mdi-magnify"
-      />
+        v-model="search"
+
+        @keyup.enter="onSearch"
+      ></v-text-field>
     </div>
 
     <div class="table-wrapper">
@@ -34,7 +38,7 @@
           class="elevation-0"
           hide-default-footer
           no-data-text="There are no currencies added"
-          @click:row="editCurrency"
+          @click:row="loadCurrency"
         ></v-data-table>
 
     </div>
@@ -48,7 +52,7 @@
       <form @submit.prevent="submit">
         <div class="add-currency-header">
           <div class="add-currency-title">
-            <p>{{ currency.id ? 'Edit Currency' : 'Add Currency' }}</p>
+            <p>{{ currency.id ? 'Edit' : 'Add' }} Currency</p>
           </div>
           <div class="add-currency-buttons text-right">
             <v-btn 
@@ -109,34 +113,43 @@ export default {
         { text: 'Currency Name'.toUpperCase(), value: 'name' },
         { text: 'Currency Code'.toUpperCase(), value: 'code' },
         { text: 'Currency Symbol'.toUpperCase(), value: 'symbol' },
-      ]
+      ],
     }
   },
   computed: {
     ...mapGetters([
         'currency',
         'currencies',
-        // 'drawer'
+        // 'search'
     ]),    
     ...mapState({
       currencyName: state => state.currency.name,
       currencyCode: state => state.currency.code,
       currencySymbol: state => state.currency.symbol,
     }),
-    // clearCurrency(e) {
-    //   console.log(this.drawer);
-    //   if (!this.drawer) this.$store.commit('clearCurrency');
-    // },
     drawer: {
-        get() {
-          return this.$store.state.drawer;
-        },
-        set(val) {
-          return val;
-        }
+      get() {
+        return this.$store.state.drawer;
+      },
+      set(val) {
+        return val;
+      }
+    },
+    search: {
+      get () {
+        return this.$store.state.search
+      },
+      set (value) {
+        console.log('set', value);
+        this.$store.commit('updateSearch', value)
+      }
     }
   },
   methods: {
+    // updateSearch (e) {
+    //   console.log(e);
+    //   this.$store.commit('updateSearch', e.target.value)
+    // },
     updateCurrencyName (e) {
       this.$store.commit('updateCurrencyName', e.target.value)
     },
@@ -157,15 +170,15 @@ export default {
     toggleDrawer (v) {
       this.$store.commit('toggleDrawer', v)
     },  
-    editCurrency (event) {
-      this.$store.commit('editCurrency', event.id);
+    loadCurrency (event) {
+      this.$store.commit('loadCurrency', event.id);
     }
   },
-  watch: {
-    '$store.state.drawer': function() {
+  // watch: {
+  //   '$store.state.drawer': function() {
 
-    }
-  }
+  //   }
+  // }
 }
 </script>
 

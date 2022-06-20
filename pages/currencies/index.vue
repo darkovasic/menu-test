@@ -34,6 +34,7 @@
           class="elevation-0"
           hide-default-footer
           no-data-text="There are no currencies added"
+          @click:row="editCurrency"
         ></v-data-table>
 
     </div>
@@ -43,11 +44,12 @@
       right
       width="440px"
       v-model="drawer"
+      @transitioned="clearCurrency"
     >
       <form @submit.prevent="submit">
         <div class="add-currency-header">
           <div class="add-currency-title">
-            <p>Add Currency</p>
+            <p>{{ currency.id ? 'Edit Currency' : 'Add Currency' }}</p>
           </div>
           <div class="add-currency-buttons text-right">
             <v-btn 
@@ -57,10 +59,6 @@
               type="button"    
               @click="toggleDrawer(false)" 
               height="40px">Cancel</v-btn>
-            <!-- <Button
-              type="button" 
-              @click="toggleDrawer(false)"   
-            >Cancel</Button> -->
             <Button
               type="submit"     
             >Add</Button>
@@ -126,7 +124,10 @@ export default {
       currencyName: state => state.currency.name,
       currencyCode: state => state.currency.code,
       currencySymbol: state => state.currency.symbol,
-    })
+    }),
+    clearCurrency(e) {
+      if (!this.drawer) this.$store.commit('clearCurrency');
+    }
   },
   methods: {
     updateCurrencyName (e) {
@@ -140,6 +141,7 @@ export default {
     },
     submit () {
       this.$store.commit('updateCurrencies', {
+        id: this.currency.id ? this.currency.id : Math.floor(Math.random() * 10000) + 99999,
         name: this.currencyName,
         code: this.currencyCode,
         symbol: this.currencySymbol
@@ -147,7 +149,10 @@ export default {
     },
     toggleDrawer (v) {
       this.$store.commit('toggleDrawer', v)
-    },    
+    },  
+    editCurrency (event) {
+      this.$store.commit('editCurrency', event.id);
+    }
   }
 }
 </script>

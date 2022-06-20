@@ -29,7 +29,15 @@ const createStore = () => {
             },            
             toggleDrawer(state, data) {
                 state.drawer = data;
-            }   
+            },
+            editCurrency(state, id) {
+                state.currency = state.currencies.find(currency => currency.id === id);
+                state.drawer = id;
+            },
+            clearCurrency(state, event) {
+                console.log(state.drawer);
+                state.currency = {};
+            }
         },
         actions: {
 

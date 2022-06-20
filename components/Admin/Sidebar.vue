@@ -63,7 +63,7 @@ export default {
   width: 20%
   background-color: #F2F2F2
   box-sizing: border-box
-  padding: 15px 30px
+  padding: 10px 15px
 
 .icon
   margin-right: 20px

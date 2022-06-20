@@ -12,7 +12,7 @@ const createStore = () => {
                 code: '',
                 symbol: ''
             },
-            drawer: true,
+            drawer: false,
         },
         mutations: {
             updateCurrencyName(state, currencyName) {
@@ -29,15 +29,16 @@ const createStore = () => {
             },            
             toggleDrawer(state, data) {
                 state.drawer = data;
+                if(data === false) {
+                    setTimeout(() => {
+                        state.currency = {};
+                    }, 500)
+                }
             },
             editCurrency(state, id) {
                 state.currency = state.currencies.find(currency => currency.id === id);
                 state.drawer = id;
             },
-            clearCurrency(state, event) {
-                console.log(state.drawer);
-                state.currency = {};
-            }
         },
         actions: {
 

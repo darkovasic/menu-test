@@ -44,7 +44,6 @@
       right
       width="440px"
       v-model="drawer"
-      @transitioned="clearCurrency"
     >
       <form @submit.prevent="submit">
         <div class="add-currency-header">
@@ -54,8 +53,7 @@
           <div class="add-currency-buttons text-right">
             <v-btn 
               depressed 
-              color="#FF6600" 
-              class="white--text"
+              outlined 
               type="button"    
               @click="toggleDrawer(false)" 
               height="40px">Cancel</v-btn>
@@ -118,15 +116,24 @@ export default {
     ...mapGetters([
         'currency',
         'currencies',
-        'drawer'
+        // 'drawer'
     ]),    
     ...mapState({
       currencyName: state => state.currency.name,
       currencyCode: state => state.currency.code,
       currencySymbol: state => state.currency.symbol,
     }),
-    clearCurrency(e) {
-      if (!this.drawer) this.$store.commit('clearCurrency');
+    // clearCurrency(e) {
+    //   console.log(this.drawer);
+    //   if (!this.drawer) this.$store.commit('clearCurrency');
+    // },
+    drawer: {
+        get() {
+          return this.$store.state.drawer;
+        },
+        set(val) {
+          return val;
+        }
     }
   },
   methods: {
@@ -141,7 +148,7 @@ export default {
     },
     submit () {
       this.$store.commit('updateCurrencies', {
-        id: this.currency.id ? this.currency.id : Math.floor(Math.random() * 10000) + 99999,
+        id: this.currency.id ?? Math.floor(Math.random() * 10000) + 99999,
         name: this.currencyName,
         code: this.currencyCode,
         symbol: this.currencySymbol

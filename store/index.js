@@ -3,10 +3,7 @@ import Vuex from 'vuex';
 const createStore = () => {
     return new Vuex.Store({
         state: {
-            currencies: [
-                { id: 1, name: 'American Dollar', code: 'USD', symbol: '$' },
-                { id: 2, name: 'Canadian Dollar', code: 'CAD', symbol: '$' },
-            ],
+            currencies: [],
             currency: {
                 name: '',
                 code: '',
@@ -25,20 +22,42 @@ const createStore = () => {
                 state.currency.symbol = currencySymbol;
             },
             updateCurrencies(state, currency) {
-                state.currencies.push(currency);
+                const index = state.currencies.findIndex(cur => cur.id === currency.id);
+                console.log('index', index, currency);
+                if(index !== -1) {
+                    const newCurrencies = state.currencies.map((cur) => {
+                        if (cur.id === currency.id) return currency
+                        else return cur;
+                    })
+                    console.log('newCurrencies', newCurrencies);
+                    state.currencies = newCurrencies;
+                } else {
+                    console.log('push', currency);
+                    state.currencies.push(currency);
+                }
+                state.drawer = false;
+                this.commit("clearCurrency")
             },            
             toggleDrawer(state, data) {
                 state.drawer = data;
                 if(data === false) {
                     setTimeout(() => {
-                        state.currency = {};
+                        this.commit("clearCurrency")
                     }, 500)
                 }
             },
             editCurrency(state, id) {
+                console.log('edit currency', id);
                 state.currency = state.currencies.find(currency => currency.id === id);
-                state.drawer = id;
+                this.commit("toggleDrawer", id)
             },
+            clearCurrency(state) {
+                state.currency = {
+                    name: '',
+                    code: '',
+                    symbol: ''
+                }
+            }
         },
         actions: {
 

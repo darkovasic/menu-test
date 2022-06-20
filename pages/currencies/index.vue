@@ -40,7 +40,7 @@
     </div>
     <v-navigation-drawer
       absolute
-      temporary
+      stateless
       right
       width="440px"
       v-model="drawer"
@@ -59,7 +59,7 @@
               height="40px">Cancel</v-btn>
             <Button
               type="submit"     
-            >Add</Button>
+            >{{ currency.id ? 'Save' : 'Add' }}</Button>
           </div>
         </div>
         <v-divider></v-divider>
@@ -159,6 +159,11 @@ export default {
     },  
     editCurrency (event) {
       this.$store.commit('editCurrency', event.id);
+    }
+  },
+  watch: {
+    '$store.state.drawer': function() {
+
     }
   }
 }

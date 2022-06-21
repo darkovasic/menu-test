@@ -3,14 +3,8 @@ import Vuex from 'vuex';
 const createStore = () => {
     return new Vuex.Store({
         state: {
-            storedCurrencies: [
-                {id: 1, name: 'American Dollar', code: 'USD', symbol: '$'},
-                {id: 2, name: 'Canadian Dollar', code: 'CAD', symbol: '$'}   
-            ],
-            loadedCurrencies: [
-                {id: 1, name: 'American Dollar', code: 'USD', symbol: '$'},
-                {id: 2, name: 'Canadian Dollar', code: 'CAD', symbol: '$'}                
-            ],
+            storedCurrencies: [],
+            loadedCurrencies: [],
             currency: {
                 name: '',
                 code: '',

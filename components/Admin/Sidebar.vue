@@ -1,5 +1,4 @@
 <template>
-
     <div
       class="sidenav">
       <div class="nav-list">
@@ -29,7 +28,6 @@
         </div>
       </div>
     </div>
-
 </template>
 
 <script>

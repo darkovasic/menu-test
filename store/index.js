@@ -16,14 +16,12 @@ const createStore = () => {
         mutations: {
             updateSearch(state, search) {
                 state.search = search;
-
                 if(search.length >= 1) {
                     const filteredCurrencies = state.loadedCurrencies.filter(function(cur) {
                         return Object.keys(cur).some(function(key) {
                             return cur[key].toString().toLowerCase().indexOf(search) !== -1;
                         })
                     })
-                    console.log(filteredCurrencies);
                     this.commit("updateLoadedCurrencies", filteredCurrencies);
                 } else {
                     this.commit("refreshLoadedCurrencies");
@@ -43,17 +41,14 @@ const createStore = () => {
             },
             updateCurrencies(state, currency) {
                 const isEdit = state.storedCurrencies.some(cur => cur.id === currency.id);
-                console.log('isEdit', isEdit, currency);
                 if(isEdit) {
                     const newCurrencies = state.storedCurrencies.map((cur) => {
                         if (cur.id === currency.id) return currency;
                         else return cur;
                     })
-                    console.log('newCurrencies', newCurrencies);
                     state.storedCurrencies = newCurrencies;
                     this.commit('refreshLoadedCurrencies');
                 } else {
-                    console.log('push', currency);
                     state.storedCurrencies.push(currency);
                     this.commit('refreshLoadedCurrencies');
                 }

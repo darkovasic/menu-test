@@ -3,9 +3,13 @@ import Vuex from 'vuex';
 const createStore = () => {
     return new Vuex.Store({
         state: {
-            currencies: [
+            storedCurrencies: [
                 {id: 1, name: 'American Dollar', code: 'USD', symbol: '$'},
-                {id: 2, name: 'Canadian Dollar', code: 'CAD', symbol: '$'}
+                {id: 2, name: 'Canadian Dollar', code: 'CAD', symbol: '$'}   
+            ],
+            loadedCurrencies: [
+                {id: 1, name: 'American Dollar', code: 'USD', symbol: '$'},
+                {id: 2, name: 'Canadian Dollar', code: 'CAD', symbol: '$'}                
             ],
             currency: {
                 name: '',
@@ -18,7 +22,22 @@ const createStore = () => {
         mutations: {
             updateSearch(state, search) {
                 state.search = search;
-            },            
+
+                if(search.length >= 1) {
+                    const filteredCurrencies = state.loadedCurrencies.filter(function(cur) {
+                        return Object.keys(cur).some(function(key) {
+                            return cur[key].toString().toLowerCase().indexOf(search) != -1;
+                        })
+                    })
+                    console.log(filteredCurrencies);
+                    this.commit("updateLoadedCurrencies", filteredCurrencies);
+                } else {
+                    this.commit("loadStoredCurrencies");
+                }
+            }, 
+            updateLoadedCurrencies(state, currencies) {
+                state.loadedCurrencies = currencies;
+            },                       
             updateCurrencyName(state, currencyName) {
                 state.currency.name = currencyName;
             },
@@ -29,34 +48,36 @@ const createStore = () => {
                 state.currency.symbol = currencySymbol;
             },
             updateCurrencies(state, currency) {
-                const index = state.currencies.some(cur => cur.id === currency.id);
-                console.log('index', index, currency);
-                if(index) {
-                    const newCurrencies = state.currencies.map((cur) => {
-                        if (cur.id === currency.id) return currency
+                const isEdit = state.storedCurrencies.some(cur => cur.id === currency.id);
+                console.log('isEdit', isEdit, currency);
+                if(isEdit) {
+                    const newCurrencies = state.storedCurrencies.map((cur) => {
+                        if (cur.id === currency.id) return currency;
                         else return cur;
                     })
                     console.log('newCurrencies', newCurrencies);
-                    state.currencies = newCurrencies;
+                    state.storedCurrencies = newCurrencies;
                 } else {
                     console.log('push', currency);
-                    state.currencies.push(currency);
+                    state.storedCurrencies.push(currency);
                 }
                 state.drawer = false;
-                this.commit("clearCurrency")
+                this.commit("clearCurrency");
             },            
             toggleDrawer(state, data) {
                 state.drawer = data;
                 if(data === false) {
                     setTimeout(() => {
-                        this.commit("clearCurrency")
+                        this.commit("clearCurrency");
                     }, 500)
                 }
             },
+            loadStoredCurrencies(state) {
+                state.loadedCurrencies = state.storedCurrencies;
+            },
             loadCurrency(state, id) {
-                console.log('edit currency', id);
-                state.currency = state.currencies.find(currency => currency.id === id);
-                this.commit("toggleDrawer", id)
+                state.currency = state.loadedCurrencies.find(currency => currency.id === id);
+                this.commit("toggleDrawer", id);
             },
             clearCurrency(state) {
                 state.currency = {
@@ -64,24 +85,23 @@ const createStore = () => {
                     code: '',
                     symbol: ''
                 }
+            },
+            deleteCurrency(state, id) {
+                const index = state.storedCurrencies.findIndex(currency => currency.id === id);
+                state.storedCurrencies.splice(index, 1);
             }
         },
-        actions: {
-
-        },
+        actions: {},
         getters: {
-            currencies(state) {
-                return state.currencies;
+            loadedCurrencies(state) {
+                return state.loadedCurrencies;
             },
             currency(state) {
                 return state.currency;
             },
             drawer(state) {
                 return state.drawer;
-            },
-            search(state) {
-                return state.search;
-            }                       
+            },                   
         }
     });
 }

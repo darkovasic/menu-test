@@ -13,39 +13,33 @@
         type="button"    
         @click="toggleDrawer" 
         height="40px"> &#10010; Add Currency </v-btn>
-
       </div>
     </div>
 
     <div class="search-wrapper">
       <v-text-field
         outlined dense solo flat
-        type="text"
         label="Search"
         prepend-inner-icon="mdi-magnify"
         v-model="search"
-
-        @keyup.enter="onSearch"
       ></v-text-field>
     </div>
 
     <div class="table-wrapper">
-        <v-data-table
-          :headers="headers"
-          :items="currencies"
-          item-key="id"
-          :items-per-page="15"
-          class="elevation-0"
-          hide-default-footer
-          no-data-text="There are no currencies added"
-          @click:row="loadCurrency"
-        ></v-data-table>
+      <v-data-table
+        :headers="headers"
+        :items="loadedCurrencies"
+        item-key="id"
+        :items-per-page="15"
+        class="elevation-0"
+        hide-default-footer
+        no-data-text="There are no currencies added"
+        @click:row="loadCurrency"
+      ></v-data-table>
 
     </div>
     <v-navigation-drawer
-      absolute
-      stateless
-      right
+      absolute stateless right
       width="440px"
       v-model="drawer"
     >
@@ -119,8 +113,7 @@ export default {
   computed: {
     ...mapGetters([
         'currency',
-        'currencies',
-        // 'search'
+        'loadedCurrencies'
     ]),    
     ...mapState({
       currencyName: state => state.currency.name,
@@ -140,16 +133,11 @@ export default {
         return this.$store.state.search
       },
       set (value) {
-        console.log('set', value);
         this.$store.commit('updateSearch', value)
       }
     }
   },
   methods: {
-    // updateSearch (e) {
-    //   console.log(e);
-    //   this.$store.commit('updateSearch', e.target.value)
-    // },
     updateCurrencyName (e) {
       this.$store.commit('updateCurrencyName', e.target.value)
     },

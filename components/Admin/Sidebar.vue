@@ -58,6 +58,9 @@ export default {
 .active
   background-color: rgba(255, 102, 0, 0.07)
 
+.active a
+  color: #FF6600
+
 .sidenav
   height: 100%
   width: 20%

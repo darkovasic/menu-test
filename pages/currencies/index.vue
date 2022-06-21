@@ -35,7 +35,20 @@
         hide-default-footer
         no-data-text="There are no currencies added"
         @click:row="loadCurrency"
-      ></v-data-table>
+      >
+        <template slot="item" slot-scope="row">
+          <tr>
+            <td>{{ row.item.name }}</td>
+            <td>{{ row.item.code }}</td>
+            <td>{{ row.item.symbol }}</td>
+            <td align="right">
+              <v-btn class="elevation-0" color="white" small @click="deleteCurrency(row.item)"> 
+                <v-icon color="#808080">mdi-trash-can-outline</v-icon>
+              </v-btn>
+            </td>
+          </tr>
+        </template>
+      </v-data-table>
 
     </div>
     <v-navigation-drawer
@@ -107,6 +120,7 @@ export default {
         { text: 'Currency Name'.toUpperCase(), value: 'name' },
         { text: 'Currency Code'.toUpperCase(), value: 'code' },
         { text: 'Currency Symbol'.toUpperCase(), value: 'symbol' },
+        { text: '', value: 'controls', sortable: false },
       ],
     }
   },
@@ -160,6 +174,9 @@ export default {
     },  
     loadCurrency (event) {
       this.$store.commit('loadCurrency', event.id);
+    },
+    deleteCurrency (currency) {
+      this.$store.commit('deleteCurrency', currency.id);
     }
   },
   // watch: {

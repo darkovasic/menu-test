@@ -26,7 +26,7 @@ const createStore = () => {
                 if(search.length >= 1) {
                     const filteredCurrencies = state.loadedCurrencies.filter(function(cur) {
                         return Object.keys(cur).some(function(key) {
-                            return cur[key].toString().toLowerCase().indexOf(search) != -1;
+                            return cur[key].toString().toLowerCase().indexOf(search) !== -1;
                         })
                     })
                     console.log(filteredCurrencies);

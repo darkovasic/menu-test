@@ -55,7 +55,7 @@
       width="440px"
       v-model="drawer"
     >
-      <form @submit.prevent="submit">
+      <v-form ref="currencyForm" @submit.prevent="submit">
         <div class="add-currency-header">
           <div class="add-currency-title">
             <p>{{ currency.id ? 'Edit' : 'Add' }} Currency</p>
@@ -75,28 +75,28 @@
         <v-divider></v-divider>
         <div class="add-currency-form">
           <p>Currency name</p>
-          <input
-            type="text"
-            placeholder="Add name"
-            :value="currencyName"
-            @input="updateCurrencyName"
-          />
+          <v-text-field
+            outlined dense solo flat
+            label="Add name"
+            :rules="validationRules"
+            v-model="currencyName"
+          ></v-text-field>
           <p>Currency code</p>
-          <input
-            type="text"
-            placeholder="e.g. USD"
-            :value="currencyCode"
-            @input="updateCurrencyCode"
-          />
+          <v-text-field
+            outlined dense solo flat
+            label="e.g. USD"
+            :rules="validationRules"
+            v-model="currencyCode"
+          ></v-text-field>
           <p>Currency symbol</p>
-          <input
-            type="text"
-            placeholder="Add symbol"
-            :value="currencySymbol"
-            @input="updateCurrencySymbol"
-          />
+          <v-text-field
+            outlined dense solo flat
+            label="Add symbol"
+            :rules="validationRules"
+            v-model="currencySymbol"
+          ></v-text-field>
         </div>
-      </form>
+      </v-form>
     </v-navigation-drawer>
   </div>
 </template>
@@ -121,6 +121,9 @@ export default {
         { text: 'Currency Symbol'.toUpperCase(), value: 'symbol' },
         { text: '', value: 'controls', sortable: false },
       ],
+      validationRules: [
+        v => !!v || 'Field is required',
+      ],
     }
   },
   computed: {
@@ -129,9 +132,7 @@ export default {
         'loadedCurrencies'
     ]),    
     ...mapState({
-      currencyName: state => state.currency.name,
-      currencyCode: state => state.currency.code,
-      currencySymbol: state => state.currency.symbol,
+      //
     }),
     drawer: {
       get() {
@@ -148,25 +149,43 @@ export default {
       set (value) {
         this.$store.commit('updateSearch', value)
       }
-    }
+    },
+    currencyName: {
+      get () {
+        return this.$store.state.currency.name
+      },
+      set (value) {
+        this.$store.commit('updateCurrencyName', value)
+      }
+    },
+    currencyCode: {
+      get () {
+        return this.$store.state.currency.code
+      },
+      set (value) {
+        this.$store.commit('updateCurrencyCode', value)
+      }
+    },
+    currencySymbol: {
+      get () {
+        return this.$store.state.currency.symbol
+      },
+      set (value) {
+        this.$store.commit('updateCurrencySymbol', value)
+      }
+    },
+
   },
   methods: {
-    updateCurrencyName (e) {
-      this.$store.commit('updateCurrencyName', e.target.value)
-    },
-    updateCurrencyCode (e) {
-      this.$store.commit('updateCurrencyCode', e.target.value)
-    },
-    updateCurrencySymbol (e) {
-      this.$store.commit('updateCurrencySymbol', e.target.value)
-    },
     submit () {
-      this.$store.commit('updateCurrencies', {
-        id: this.currency.id ?? Math.floor(Math.random() * 10000) + 99999,
-        name: this.currencyName,
-        code: this.currencyCode,
-        symbol: this.currencySymbol
-      })
+      if (this.$refs.currencyForm.validate()){
+        this.$store.commit('updateCurrencies', {
+          id: this.currency.id ?? Math.floor(Math.random() * 10000) + 99999,
+          name: this.currencyName,
+          code: this.currencyCode,
+          symbol: this.currencySymbol
+        })
+      }
     },
     toggleDrawer (v) {
       this.$store.commit('toggleDrawer', v)

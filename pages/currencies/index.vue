@@ -34,15 +34,14 @@
         class="elevation-0"
         hide-default-footer
         no-data-text="There are no currencies added"
-        @click:row="loadCurrency"
       >
         <template slot="item" slot-scope="row">
-          <tr>
+          <tr @click="loadCurrency(row.item)">
             <td>{{ row.item.name }}</td>
             <td>{{ row.item.code }}</td>
             <td>{{ row.item.symbol }}</td>
             <td align="right">
-              <v-btn class="elevation-0" color="white" small @click="deleteCurrency(row.item)"> 
+              <v-btn class="elevation-0" color="transparent" small @click.stop="deleteCurrency(row.item)"> 
                 <v-icon color="#808080">mdi-trash-can-outline</v-icon>
               </v-btn>
             </td>

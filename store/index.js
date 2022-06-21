@@ -32,7 +32,7 @@ const createStore = () => {
                     console.log(filteredCurrencies);
                     this.commit("updateLoadedCurrencies", filteredCurrencies);
                 } else {
-                    this.commit("loadStoredCurrencies");
+                    this.commit("refreshLoadedCurrencies");
                 }
             }, 
             updateLoadedCurrencies(state, currencies) {
@@ -57,9 +57,11 @@ const createStore = () => {
                     })
                     console.log('newCurrencies', newCurrencies);
                     state.storedCurrencies = newCurrencies;
+                    this.commit('refreshLoadedCurrencies');
                 } else {
                     console.log('push', currency);
                     state.storedCurrencies.push(currency);
+                    this.commit('refreshLoadedCurrencies');
                 }
                 state.drawer = false;
                 this.commit("clearCurrency");
@@ -72,7 +74,7 @@ const createStore = () => {
                     }, 500)
                 }
             },
-            loadStoredCurrencies(state) {
+            refreshLoadedCurrencies(state) {
                 state.loadedCurrencies = state.storedCurrencies;
             },
             loadCurrency(state, id) {
@@ -89,6 +91,7 @@ const createStore = () => {
             deleteCurrency(state, id) {
                 const index = state.storedCurrencies.findIndex(currency => currency.id === id);
                 state.storedCurrencies.splice(index, 1);
+                this.commit('refreshLoadedCurrencies');
             }
         },
         actions: {},

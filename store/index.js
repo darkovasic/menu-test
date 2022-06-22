@@ -67,7 +67,7 @@ const createStore = () => {
                 state.loadedCurrencies = state.storedCurrencies;
             },
             loadCurrency(state, id) {
-                state.currency = state.loadedCurrencies.find(currency => currency.id === id);
+                state.currency = structuredClone(state.loadedCurrencies.find(currency => currency.id === id));
                 this.commit("toggleDrawer", id);
             },
             clearCurrency(state) {

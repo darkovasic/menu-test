@@ -185,11 +185,11 @@ export default {
           code: this.currencyCode,
           symbol: this.currencySymbol
         });
-        this.$refs.currencyForm.resetValidation();
       }
     },
     toggleDrawer (v) {
-      this.$store.commit('toggleDrawer', v)
+      this.$store.commit('toggleDrawer', v);
+      this.$refs.currencyForm.resetValidation();
     },  
     loadCurrency (event) {
       this.$store.commit('loadCurrency', event.id);

@@ -184,7 +184,8 @@ export default {
           name: this.currencyName,
           code: this.currencyCode,
           symbol: this.currencySymbol
-        })
+        });
+        this.$refs.currencyForm.resetValidation();
       }
     },
     toggleDrawer (v) {

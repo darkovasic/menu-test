@@ -1,5 +1,5 @@
 <template>
-  <div class="currencies-container">
+  <div class="page-container">
     <div class="top">
       <div class="top-left-div">
         <h1>Currencies</h1>
@@ -77,21 +77,22 @@
           <p>Currency name</p>
           <v-text-field
             outlined dense solo flat
-            label="Add name"
+            placeholder="Add name"
+            ref="currencyName"
             :rules="validationRules"
             v-model="currencyName"
           ></v-text-field>
           <p>Currency code</p>
           <v-text-field
             outlined dense solo flat
-            label="e.g. USD"
+            placeholder="e.g. USD"
             :rules="validationRules"
             v-model="currencyCode"
           ></v-text-field>
           <p>Currency symbol</p>
           <v-text-field
             outlined dense solo flat
-            label="Add symbol"
+            placeholder="Add symbol"
             :rules="validationRules"
             v-model="currencySymbol"
           ></v-text-field>
@@ -116,10 +117,10 @@ export default {
   data() {
     return {
       headers:[
-        { text: 'Currency Name'.toUpperCase(), value: 'name' },
-        { text: 'Currency Code'.toUpperCase(), value: 'code' },
-        { text: 'Currency Symbol'.toUpperCase(), value: 'symbol' },
-        { text: '', value: 'controls', sortable: false },
+        { text: 'Currency Name'.toUpperCase(), value: 'name', sortable: false },
+        { text: 'Currency Code'.toUpperCase(), value: 'code', sortable: false, width: '18%' },
+        { text: 'Currency Symbol'.toUpperCase(), value: 'symbol', sortable: false, width: '18%' },
+        { text: '', value: 'controls', sortable: false, width: '8%' },
       ],
       validationRules: [
         v => !!v || 'Field is required',
@@ -190,6 +191,11 @@ export default {
     toggleDrawer (v) {
       this.$store.commit('toggleDrawer', v);
       this.$refs.currencyForm.resetValidation();
+      // if(v) {
+      //   setTimeout(() => {
+      //     this.$refs["currencyName"].$refs.input.focus()
+      //   }, 100)
+      // }
     },  
     loadCurrency (event) {
       this.$store.commit('loadCurrency', event.id);
@@ -207,9 +213,9 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.currencies-container
+.page-container
   position: relative
-  width: 80%
+  width: calc(100% - 256px)
   height: 100%
 
 .top

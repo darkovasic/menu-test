@@ -1,6 +1,5 @@
 <template>
   <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
       <v-card flat class="rounded-lg pa-10 form-container">
         <v-card-title class="pa-0 pb-8">
           <MenuLogo />
@@ -42,7 +41,6 @@
           </v-card-actions>
         </v-form>
       </v-card>
-    </v-col>
   </v-row>
 </template>
 

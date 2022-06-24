@@ -17,10 +17,12 @@ const createStore = () => {
             updateSearch(state, search) {
                 state.search = search;
                 if(search.length >= 1) {
+
                     const filteredCurrencies = state.loadedCurrencies.filter(function(cur) {
-                        return Object.keys(cur).some(function(key) {
-                            return cur[key].toString().toLowerCase().indexOf(search) !== -1;
-                        })
+                        return Object.keys(cur).some(key => cur[key].toString().toLowerCase().includes(search.toLowerCase()));
+                        // return Object.keys(cur).some(function(key) {
+                        //     return cur[key].toString().toLowerCase().indexOf(search) !== -1;
+                        // })
                     })
                     this.commit("updateLoadedCurrencies", filteredCurrencies);
                 } else {
@@ -64,7 +66,7 @@ const createStore = () => {
                 }
             },
             refreshLoadedCurrencies(state) {
-                state.loadedCurrencies = state.storedCurrencies;
+                state.loadedCurrencies = [...state.storedCurrencies];
             },
             loadCurrency(state, id) {
                 state.currency = structuredClone(state.loadedCurrencies.find(currency => currency.id === id));
@@ -78,9 +80,10 @@ const createStore = () => {
                 }
             },
             deleteCurrency(state, id) {
-                const index = state.storedCurrencies.findIndex(currency => currency.id === id);
-                state.storedCurrencies.splice(index, 1);
-                this.commit('refreshLoadedCurrencies');
+                const storedIndex = state.storedCurrencies.findIndex(currency => currency.id === id);
+                const loadedIndex = state.loadedCurrencies.findIndex(currency => currency.id === id);
+                state.storedCurrencies.splice(storedIndex, 1);
+                state.loadedCurrencies.splice(loadedIndex, 1);
             }
         },
         actions: {},

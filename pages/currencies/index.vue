@@ -17,12 +17,12 @@
     </div>
 
     <div class="search-wrapper">
-      <v-text-field
+      <Input
         outlined dense solo flat
         label="Search"
         prepend-inner-icon="mdi-magnify"
         v-model="search"
-      ></v-text-field>
+      ></Input>
     </div>
 
     <div class="table-wrapper">
@@ -75,27 +75,26 @@
         <v-divider></v-divider>
         <div class="add-currency-form">
           <p>Currency name</p>
-          <v-text-field
-            outlined dense solo flat
+          <Input
             placeholder="Add name"
             ref="currencyName"
             :rules="validationRules"
             v-model="currencyName"
-          ></v-text-field>
+          ></Input>
           <p>Currency code</p>
-          <v-text-field
+          <Input
             outlined dense solo flat
             placeholder="e.g. USD"
             :rules="validationRules"
             v-model="currencyCode"
-          ></v-text-field>
+          ></Input>
           <p>Currency symbol</p>
-          <v-text-field
+          <Input
             outlined dense solo flat
             placeholder="Add symbol"
             :rules="validationRules"
             v-model="currencySymbol"
-          ></v-text-field>
+          ></Input>
         </div>
       </v-form>
     </v-navigation-drawer>

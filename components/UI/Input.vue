@@ -5,6 +5,8 @@
     dense
     solo
     flat
+    @input="$emit('input', $event)"
+    color="orange"
   ></v-text-field>
 </template>
 
@@ -13,3 +15,7 @@ export default {
   name: 'Input'
 }
 </script>
+
+<style lang="sass">
+
+</style>

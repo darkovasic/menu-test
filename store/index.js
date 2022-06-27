@@ -1,10 +1,11 @@
 import Vuex from 'vuex';
 
 const createStore = () => {
+    const savedCurrencies = JSON.parse(localStorage.getItem('currencies')) ?? [];
     return new Vuex.Store({
         state: {
-            storedCurrencies: [],
-            loadedCurrencies: [],
+            storedCurrencies: savedCurrencies,
+            loadedCurrencies: savedCurrencies,
             currency: {
                 name: '',
                 code: '',
@@ -67,6 +68,7 @@ const createStore = () => {
             },
             refreshLoadedCurrencies(state) {
                 state.loadedCurrencies = [...state.storedCurrencies];
+                localStorage.setItem('currencies', JSON.stringify(state.storedCurrencies));
             },
             loadCurrency(state, id) {
                 state.currency = structuredClone(state.loadedCurrencies.find(currency => currency.id === id));
@@ -81,9 +83,8 @@ const createStore = () => {
             },
             deleteCurrency(state, id) {
                 const storedIndex = state.storedCurrencies.findIndex(currency => currency.id === id);
-                const loadedIndex = state.loadedCurrencies.findIndex(currency => currency.id === id);
                 state.storedCurrencies.splice(storedIndex, 1);
-                state.loadedCurrencies.splice(loadedIndex, 1);
+                this.commit('refreshLoadedCurrencies');
             }
         },
         actions: {},
